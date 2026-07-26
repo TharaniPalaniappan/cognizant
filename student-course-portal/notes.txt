@@ -1,0 +1,10 @@
+angular.json - Workspace configuration file; defines build/serve/test settings, file paths, and project-wide options for the Angular CLI.
+tsconfig.json - Base TypeScript compiler configuration shared across the whole project.
+tsconfig.app.json - TypeScript config specific to building the application (extends tsconfig.json, excludes test files).
+package.json - Lists project dependencies, dev dependencies, and npm scripts (start, build, test, etc.).
+src/main.ts - Application entry point; bootstraps the root component (App) and starts the Angular app in the browser.
+src/app/app.config.ts - Standalone-mode application configuration; registers providers (router, HTTP client, etc.) instead of using an NgModule.
+src/app/app.ts - Root standalone component of the application; the top-level UI container that hosts the router outlet.
+src/index.html - The single HTML page the app is bootstrapped into; contains the <app-root> element where Angular renders the app.
+ng build output: dist/student-course-portal/main-NLVHSGWP.js contains the compiled application code (bundled + minified JS).
+angular.json budgets: enforce max bundle size (initial JS warn at 500kB/error at 1MB) and max per-component CSS size (warn at 4kB/error at 8kB) during production builds, to keep the app performant.
