@@ -1,1 +1,62 @@
-<p>student-profile works!</p>
+<h2>Student Profile — Enrollment Form</h2>
+
+<form #profileForm="ngForm" (ngSubmit)="onSubmit(profileForm)" novalidate>
+
+  <div>
+    <label for="name">Name:</label>
+    <input
+      type="text"
+      id="name"
+      name="name"
+      [(ngModel)]="studentName"
+      #nameField="ngModel"
+      required
+      minlength="3"
+    />
+    <div *ngIf="nameField.invalid && (nameField.touched || submitted)" style="color: red;">
+      <span *ngIf="nameField.errors?.['required']">Name is required.</span>
+      <span *ngIf="nameField.errors?.['minlength']">Name must be at least 3 characters.</span>
+    </div>
+  </div>
+
+  <div>
+    <label for="email">Email:</label>
+    <input
+      type="email"
+      id="email"
+      name="email"
+      [(ngModel)]="studentEmail"
+      #emailField="ngModel"
+      required
+      email
+    />
+    <div *ngIf="emailField.invalid && (emailField.touched || submitted)" style="color: red;">
+      <span *ngIf="emailField.errors?.['required']">Email is required.</span>
+      <span *ngIf="emailField.errors?.['email']">Enter a valid email address.</span>
+    </div>
+  </div>
+
+  <div>
+    <label for="course">Select Course:</label>
+    <select
+      id="course"
+      name="course"
+      [(ngModel)]="selectedCourse"
+      #courseField="ngModel"
+      required
+    >
+      <option value="" disabled>-- Choose a course --</option>
+      <option value="CS101">Data Structures (CS101)</option>
+      <option value="CS102">Operating Systems (CS102)</option>
+      <option value="CS103">Database Systems (CS103)</option>
+    </select>
+    <div *ngIf="courseField.invalid && (courseField.touched || submitted)" style="color: red;">
+      <span *ngIf="courseField.errors?.['required']">Please select a course.</span>
+    </div>
+  </div>
+
+  <button type="submit">Enroll</button>
+
+</form>
+
+<p *ngIf="submitted && profileForm.valid" style="color: green;">✅ Enrollment successful!</p>
