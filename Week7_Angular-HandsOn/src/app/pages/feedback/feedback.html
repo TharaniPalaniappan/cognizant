@@ -1,0 +1,55 @@
+<h2>Course Feedback (Reactive Form)</h2>
+
+<form [formGroup]="feedbackForm" (ngSubmit)="onSubmit()">
+
+  <div>
+    <label for="studentName">Name:</label>
+    <input type="text" id="studentName" formControlName="studentName" />
+    <div *ngIf="feedbackForm.get('studentName')?.invalid && (feedbackForm.get('studentName')?.touched || submitted)" style="color: red;">
+      <span *ngIf="feedbackForm.get('studentName')?.errors?.['required']">Name is required.</span>
+      <span *ngIf="feedbackForm.get('studentName')?.errors?.['minlength']">Name must be at least 3 characters.</span>
+    </div>
+  </div>
+
+  <div>
+    <label for="courseCode">Course:</label>
+    <select id="courseCode" formControlName="courseCode">
+      <option value="" disabled>-- Choose a course --</option>
+      <option value="CS101">Data Structures (CS101)</option>
+      <option value="CS102">Operating Systems (CS102)</option>
+      <option value="CS103">Database Systems (CS103)</option>
+    </select>
+    <div *ngIf="feedbackForm.get('courseCode')?.invalid && (feedbackForm.get('courseCode')?.touched || submitted)" style="color: red;">
+      <span>Please select a course.</span>
+    </div>
+  </div>
+
+  <div>
+    <label for="rating">Rating (1-5):</label>
+    <select id="rating" formControlName="rating">
+      <option value="" disabled>-- Rate --</option>
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+    </select>
+    <div *ngIf="feedbackForm.get('rating')?.invalid && (feedbackForm.get('rating')?.touched || submitted)" style="color: red;">
+      <span>Please select a rating.</span>
+    </div>
+  </div>
+
+  <div formArrayName="comments">
+    <label>Comments:</label>
+    <div *ngFor="let comment of comments.controls; let i = index" style="margin-bottom: 5px;">
+      <input type="text" [formControlName]="i" placeholder="Add a comment" />
+      <button type="button" (click)="removeComment(i)" [disabled]="comments.length === 1">Remove</button>
+      <span *ngIf="comment.invalid && (comment.touched || submitted)" style="color: red;"> Comment cannot be empty.</span>
+    </div>
+    <button type="button" (click)="addComment()">+ Add Comment</button>
+  </div>
+
+  <br />
+  <button type="submit">Submit Feedback</button>
+
+</form>
