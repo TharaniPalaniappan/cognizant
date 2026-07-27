@@ -1,4 +1,23 @@
 <h2>Courses</h2>
-<app-course-card [course]="course1"></app-course-card>
-<app-course-card [course]="course2"></app-course-card>
-<app-course-card [course]="course3"></app-course-card>
+<h2>Courses</h2>
+<p *ngIf="!course1 && !course2 && !course3">No courses available.</p>
+
+<div
+  *ngFor="let course of [course1, course2, course3]"
+  appHighlight
+  [highlightColor]="'#e0f7fa'"
+  [ngClass]="{ selected: selectedCourseId === course.id }"
+  [ngStyle]="{ border: selectedCourseId === course.id ? '2px solid #007bff' : '1px solid #ccc' }"
+  (click)="selectCourse(course.id)"
+  style="padding: 10px; margin-bottom: 10px; cursor: pointer;"
+>
+  <app-course-card [course]="course"></app-course-card>
+  <p>{{ course.description | truncate:40 }}</p>
+
+  <span [ngSwitch]="course.status">
+    <span *ngSwitchCase="'open'" style="color: green;">🟢 Open</span>
+    <span *ngSwitchCase="'full'" style="color: red;">🔴 Full</span>
+    <span *ngSwitchCase="'waitlist'" style="color: orange;">🟠 Waitlist</span>
+    <span *ngSwitchDefault>Status unknown</span>
+  </span>
+</div>
